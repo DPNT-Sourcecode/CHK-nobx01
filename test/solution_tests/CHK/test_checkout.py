@@ -13,4 +13,4 @@ class TestCheckout():
         assert checkout_solution.count_items('ABBCCDDC') == {'A': 1, 'B': 2, 'C': 3, 'D':2}
 
     def test_checkout(self):
-        pass
+        assert checkout_solution.checkout('ABE') == -1

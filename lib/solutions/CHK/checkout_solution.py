@@ -30,7 +30,7 @@ def clean_and_check_input(input: str):
 
 def count_items(input: str) -> dict:
     """
-    Given a valid string input comprising of letters indicative of SKU items, this function calculates the quantity
+    Given a valid input string comprising of letters, indicative of SKU items, this function calculates the quantity
     of each item and returns it in a dictionary.
     E.g. "AABBBBBCDDAADD" -> {'A': 4, 'B': 5, 'C': 1, 'D': 4}
     """
@@ -43,6 +43,26 @@ def count_items(input: str) -> dict:
     return counts
 
 
-def checkout(skus):
-    raise NotImplementedError()
-
+def checkout(input: str) -> int:
+    """
+    This function calls clean_and_check_input and if the input is illegal it returns -1. If the input is accepted
+    calls count_items (which returns a dictionary item, quantity) and then loops through and calculates the
+    total checkout value as a superposition of the offer_price * offer_quantity and unit_price * remaining_quantity.
+    """
+    cleaned_input = clean_and_check_input(input)
+    if cleaned_input is None:
+        return -1
+    counted_items = count_items(cleaned_input)
+    total_prices = {}
+    for sku, quantity in counted_items.items():
+        unit_price = PRICES[sku]['price']
+        offer = PRICES[sku]['offer']
+        if offer and quantity >= offer['quantity']:
+            offer_price = offer['price']
+            offer_quantity = quantity // offer['quantity']
+            remaining_quantity = quantity % offer['quantity']
+            total_price = offer_price * offer_quantity + unit_price * remaining_quantity
+        else:
+            total_price = unit_price * quantity
+        total_prices[sku] = total_price
+    return sum(total_prices.values())
