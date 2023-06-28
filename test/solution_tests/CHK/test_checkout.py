@@ -14,3 +14,6 @@ class TestCheckout():
 
     def test_checkout(self):
         assert checkout_solution.checkout('ABE') == -1
+        assert checkout_solution.checkout('AAAAABBBBBCD') == 385
+        assert checkout_solution.checkout('ABB') == 95
+        assert checkout_solution.checkout('AAAAAAAAAAABBBBBBBCCCCDDDD') == 795

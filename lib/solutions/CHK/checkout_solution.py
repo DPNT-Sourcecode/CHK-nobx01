@@ -45,9 +45,11 @@ def count_items(input: str) -> dict:
 
 def checkout(input: str) -> int:
     """
-    This function calls clean_and_check_input and if the input is illegal it returns -1. If the input is accepted
+    This function calls clean_and_check_input and if the input is illegal it returns -1. If the input is accepted it
     calls count_items (which returns a dictionary item, quantity) and then loops through and calculates the
-    total checkout value as a superposition of the offer_price * offer_quantity and unit_price * remaining_quantity.
+    total checkout value if there are admissible offers through a superposition of the
+    offer_price * offer_quantity and unit_price * remaining_quantity. If no offers are applicable it computes the
+    price as unit_price * quantity. The sum of all total prices is the total checkout value.
     """
     cleaned_input = clean_and_check_input(input)
     if cleaned_input is None:
