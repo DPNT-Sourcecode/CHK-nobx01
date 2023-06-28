@@ -51,12 +51,16 @@ def checkout(input: str) -> int:
     offer_price * offer_quantity and unit_price * remaining_quantity. If no offers are applicable it computes the
     price as unit_price * quantity. The sum of all total prices is the total checkout value.
     """
-    cleaned_input = clean_and_check_input(input)
-    if cleaned_input is None:
-        return -1
     if len(input) == 0:
         return 0
+
+    cleaned_input = clean_and_check_input(input)
+
+    if cleaned_input is None:
+        return -1
+
     counted_items = count_items(cleaned_input)
+
     total_prices = {}
     for sku, quantity in counted_items.items():
         unit_price = PRICES[sku]['price']
@@ -70,4 +74,5 @@ def checkout(input: str) -> int:
             total_price = unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
 
