@@ -4,4 +4,3 @@ def compute(x: int, y:int) -> int:
     if not (0<=x <=100) or not(0<=y<=100):
         raise ValueError("Both integers must be positive and between 0 and 100.")
     return x+y
-
