@@ -4,7 +4,8 @@ from solutions.CHK import checkout_solution
 class TestCheckout():
 
     def test_clean_and_check_input(self):
-        assert checkout_solution.clean_and_check_input('A--b Cc D   B_A') == 'ABCCDBA'
+        assert checkout_solution.clean_and_check_input('A--B CC D   B_A') == 'ABCCDBA'
+        assert checkout_solution.clean_and_check_input('A--b cC D   B_A') == None
         assert checkout_solution.clean_and_check_input('A_4 D') == None
         assert checkout_solution.clean_and_check_input('A--b Cc D   B_A E') == None
 
@@ -17,3 +18,5 @@ class TestCheckout():
         assert checkout_solution.checkout('AAAAABBBBBCD') == 385
         assert checkout_solution.checkout('ABB') == 95
         assert checkout_solution.checkout('AAAAAAAAAAABBBBBBBCCCCDDDD') == 795
+        assert checkout_solution.checkout('a') == -1
+        assert checkout_solution.checkout('ABCa') == -1
