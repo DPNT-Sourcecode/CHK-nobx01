@@ -11,11 +11,10 @@ PRICES = {
 }
 
 
-
-def clean_input(input: str) -> str | None:
+def clean_and_check_input(input: str):
     if not isinstance(input, str) or len(input) == 0:
         return
-    input = input.replace(' ', '').upper()
+    input = input.replace(' ', '').replace('-','').replace('_','').upper()
     if not input.isalpha():
         return
     available_items = set(PRICES.keys())
