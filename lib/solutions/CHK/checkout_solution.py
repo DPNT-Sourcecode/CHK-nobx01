@@ -14,12 +14,12 @@ PRICES = {
 def clean_and_check_input(input: str):
     """
     This function removes spaces and delimeters (e.g. dashes and underscores), it capitalises the letters,
-    and checks if the SKU items are valid. It also checks the input is of instance type string and is non-empty.
+    and checks if the SKU items are valid. It also checks the input is of instance type string.
     If so, it returns a string of characters otherwise it returns None.
     """
-    if not isinstance(input, str) or len(input) == 0:
+    if not isinstance(input, str):
         return
-    input = input.replace(' ', '').replace('-','').replace('_','').upper()
+    input = input.replace(' ', '').replace('-','').replace('_','')
     if not input.isalpha():
         return
     available_items = set(PRICES.keys())
@@ -51,6 +51,8 @@ def checkout(input: str) -> int:
     offer_price * offer_quantity and unit_price * remaining_quantity. If no offers are applicable it computes the
     price as unit_price * quantity. The sum of all total prices is the total checkout value.
     """
+    if len(input) == 0:
+        return 0
     cleaned_input = clean_and_check_input(input)
     if cleaned_input is None:
         return -1
@@ -68,3 +70,4 @@ def checkout(input: str) -> int:
             total_price = unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
