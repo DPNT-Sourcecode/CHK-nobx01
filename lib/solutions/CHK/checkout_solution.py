@@ -3,12 +3,14 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 
+FREE_ITEM_KEY = 'free_item'
+
 PRICES = {
     'A':{'price': 50, 'offers': [{'quantity': 3, 'price': 130}, {'quantity': 5, 'price': 200}]},
     'B':{'price': 30, 'offers': [{'quantity': 2, 'price': 45}]},
     'C':{'price': 20, 'offers': None},
     'D':{'price': 15, 'offers': None},
-    'E':{'price': 40, 'offers': [{'quantity': 2, 'free_item': 'B'}]},
+    'E':{'price': 40, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'B'}]},
 }
 
 
@@ -50,8 +52,8 @@ def sort_offers(offers: list) -> list:
     return the list in a sorted order such that the most valuable offers (i.e. the ones minimising price/quantity ratio)
     show up first.
     """
-    free_item = next((item for item in offers if 'free_item' in item), None)
-    remaining_items = [item for item in offers if 'free_item' not in item]
+    free_item = next((item for item in offers if FREE_ITEM_KEY in item), None)
+    remaining_items = [item for item in offers if FREE_ITEM_KEY not in item]
     sorted_items = sorted(remaining_items, key=lambda d: d['price'] / d['quantity'])
     return [free_item] + sorted_items if free_item else sorted_items
 
@@ -64,7 +66,7 @@ def get_items_with_free_item() -> list:
     items_with_free_item = [
         item
         for item, data in PRICES.items()
-        if data.get('offers') and any('free_item' in offer for offer in data['offers'])
+        if data.get('offers') and any(FREE_ITEM_KEY in offer for offer in data['offers'])
     ]
     return items_with_free_item
 
@@ -73,7 +75,7 @@ def get_offer_with_free_item(offers: list) -> dict:
     """
     Given a list of dictionaries, return the one with the key 'free_item'
     """
-    return next((d for d in offers if 'free_item' in d), None)
+    return next((d for d in offers if FREE_ITEM_KEY in d), None)
 
 
 def apply_free_items(counted_items):
@@ -86,7 +88,7 @@ def apply_free_items(counted_items):
             offers = PRICES[item]['offers']
             offer = get_offer_with_free_item(offers)
             offer_quantity = counted_items[item] // offer['quantity']
-            free_sku = offer['free_item']
+            free_sku = offer[FREE_ITEM_KEY]
             number_of_items = counted_items[free_sku]
             applied_quantity = number_of_items if number_of_items <= offer_quantity else offer_quantity
             counted_items[free_sku] -= applied_quantity
@@ -119,10 +121,11 @@ def checkout(input: str) -> int:
         offers = PRICES[sku]['offers']
         if offers:
             for offer in sort_offers(offers):
-                if 'free_item' not in offer and quantity >= offer['quantity']:
+                if FREE_ITEM_KEY not in offer and quantity >= offer['quantity']:
                     offer_quantity = quantity // offer['quantity']
                     quantity = quantity % offer['quantity']
                     total_price += offer['price'] * offer_quantity
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+

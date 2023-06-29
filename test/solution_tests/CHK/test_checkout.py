@@ -34,8 +34,8 @@ class TestCheckout():
         # free and special offers
         assert checkout_solution.checkout('B'*2 + 'E'*7) == 280
         assert checkout_solution.checkout('A'*2 + 'B'*6 + 'E'*7) == 455
-        # assert checkout_solution.checkout('AAAAABBBBBCD') == 385
-        # assert checkout_solution.checkout('ABB') == 95
-        # assert checkout_solution.checkout('AAAAAAAAAAABBBBBBBCCCCDDDD') == 795
-        # assert checkout_solution.checkout('a') == -1
-        # assert checkout_solution.checkout('ABCa') == -1
+        # multiple non-free special offers
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4) == 885
+        assert checkout_solution.checkout('A'*14 + 'B'*5 + 'C'*2 + 'D'*2) == 770
+
+
