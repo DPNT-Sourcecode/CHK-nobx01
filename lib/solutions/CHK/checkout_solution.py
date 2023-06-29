@@ -89,9 +89,10 @@ def apply_free_items(counted_items):
             offer = get_offer_with_free_item(offers)
             offer_quantity = counted_items[item] // offer['quantity']
             free_sku = offer[FREE_ITEM_KEY]
-            number_of_items = counted_items[free_sku]
-            applied_quantity = number_of_items if number_of_items <= offer_quantity else offer_quantity
-            counted_items[free_sku] -= applied_quantity
+            if free_sku in counted_items:
+                number_of_items = counted_items[free_sku]
+                applied_quantity = number_of_items if number_of_items <= offer_quantity else offer_quantity
+                counted_items[free_sku] -= applied_quantity
     return counted_items
 
 
@@ -129,5 +130,6 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
 
 
