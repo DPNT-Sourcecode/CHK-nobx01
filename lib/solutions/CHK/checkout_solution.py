@@ -94,8 +94,9 @@ def apply_free_items(counted_items):
 
 def checkout(input: str) -> int:
     """
-    This function returns 0 if the input is  clean_and_check_input and if the input is illegal it returns -1. If the input is accepted it
-    calls count_items (which returns a dictionary item, quantity) and then loops through and calculates the
+    This function returns 0 if the input is  clean_and_check_input and if the input is illegal it returns -1.
+    If the input is accepted it calls count_items (which returns a dictionary item, quantity) and then
+    loops through and calculates the
     total checkout value if there are admissible offers through a superposition of the
     offer_price * offer_quantity and unit_price * remaining_quantity. If no offers are applicable it computes the
     price as unit_price * quantity. The sum of all total prices is the total checkout value.
@@ -109,17 +110,19 @@ def checkout(input: str) -> int:
         return -1
 
     counted_items = count_items(cleaned_input)
+    counted_items = apply_free_items(counted_items)
 
     total_prices = {}
     for sku, quantity in counted_items.items():
         unit_price = PRICES[sku]['price']
-        offer = PRICES[sku]['offer']
-        if offer and quantity >= offer['quantity']:
-            offer_price = offer['price']
-            offer_quantity = quantity // offer['quantity']
-            remaining_quantity = quantity % offer['quantity']
-            total_price = offer_price * offer_quantity + unit_price * remaining_quantity
-        else:
-            total_price = unit_price * quantity
+        total_price = 0
+        offers = PRICES[sku]['offers']
+        if offers:
+            for offer in sort_offers(offers):
+                if 'free_item' not in offer and quantity >= offer['quantity']:
+                    offer_quantity = quantity // offer['quantity']
+                    quantity = quantity % offer['quantity']
+                    total_price += offer['price'] * offer_quantity
+        total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
