@@ -27,5 +27,3 @@ class TestCheckout():
     #     assert checkout_solution.checkout('AAAAAAAAAAABBBBBBBCCCCDDDD') == 795
     #     assert checkout_solution.checkout('a') == -1
     #     assert checkout_solution.checkout('ABCa') == -1
-
-
