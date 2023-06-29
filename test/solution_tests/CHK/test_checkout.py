@@ -58,7 +58,3 @@ class TestCheckout():
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*9) == 945
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*10) == 955
 
-
-
-
-
