@@ -13,27 +13,26 @@ PRICES = {
     'D':{'price': 15, 'offers': None},
     'E':{'price': 40, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'B'}]},
     'F':{'price': 10, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'F'}]},
-
     'G':{'price': 20, 'offers': None},
-    'H':{'price': 10, 'offers': None},
+    'H':{'price': 10, 'offers': [{'quantity': 5, 'price': 45}, {'quantity': 10, 'price': 80}]},
     'I':{'price': 35, 'offers': None},
     'J':{'price': 60, 'offers': None},
-    'K':{'price': 8, 'offers': None},
-    'L':{'price': 15, 'offers': None},
+    'K':{'price': 80, 'offers': [{'quantity': 2, 'price': 150}]},
+    'L':{'price': 90, 'offers': None},
     'M':{'price': 15, 'offers': None},
-    'N':{'price': 15, 'offers': None},
-    'O':{'price': 15, 'offers': None},
-    'P':{'price': 15, 'offers': None},
-    'Q':{'price': 15, 'offers': None},
-    'R':{'price': 15, 'offers': None},
-    'S':{'price': 15, 'offers': None},
-    'T':{'price': 15, 'offers': None},
-    'U':{'price': 15, 'offers': None},
-    'V':{'price': 15, 'offers': None},
-    'W':{'price': 15, 'offers': None},
-    'X':{'price': 15, 'offers': None},
-    'Y':{'price': 15, 'offers': None},
-    'Z':{'price': 15, 'offers': None},
+    'N':{'price': 40, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'M'}]},
+    'O':{'price': 10, 'offers': None},
+    'P':{'price': 50, 'offers': [{'quantity': 5, 'price': 200}]},
+    'Q':{'price': 30, 'offers': [{'quantity': 3, 'price': 80}]},
+    'R':{'price': 50, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'Q'}]},
+    'S':{'price': 30, 'offers': None},
+    'T':{'price': 20, 'offers': None},
+    'U':{'price': 40, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'U'}]},
+    'V':{'price': 50, 'offers': [{'quantity': 2, 'price': 90}, {'quantity': 3, 'price': 130}]},
+    'W':{'price': 20, 'offers': None},
+    'X':{'price': 90, 'offers': None},
+    'Y':{'price': 10, 'offers': None},
+    'Z':{'price': 50, 'offers': None},
 }
 
 
@@ -61,11 +60,8 @@ def count_items(input: str) -> dict:
     E.g. "AABBBBBCDDAADD" -> {'A': 4, 'B': 5, 'C': 1, 'D': 4}
     """
     counts = {}
-    for letter in input:
-        if letter in counts:
-            counts[letter] += 1
-        else:
-            counts[letter] = 1
+    for sku in input:
+        counts[sku] = counts.get(sku, 0) + 1
     return counts
 
 
@@ -152,4 +148,5 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
 

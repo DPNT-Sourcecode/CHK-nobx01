@@ -9,7 +9,6 @@ class TestCheckout():
         assert checkout_solution.clean_and_check_input('A--B CC D   B_A') == 'ABCCDBA'
         assert checkout_solution.clean_and_check_input('A--b cC D   B_A') == None
         assert checkout_solution.clean_and_check_input('A_4 D') == None
-        assert checkout_solution.clean_and_check_input('A--B CC D   B_A G') == None
 
     def test_count_items(self):
         assert checkout_solution.count_items('ABBCCDDC') == {'A': 1, 'B': 2, 'C': 3, 'D':2}
@@ -57,4 +56,5 @@ class TestCheckout():
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*8) == 945
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*9) == 945
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*10) == 955
+
 
