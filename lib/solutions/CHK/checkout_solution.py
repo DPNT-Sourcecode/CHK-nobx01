@@ -94,6 +94,7 @@ def apply_free_items(counted_items):
             counted_items[free_sku] -= applied_quantity
     return counted_items
 
+
 def checkout(input: str) -> int:
     """
     This function returns 0 if the input is  clean_and_check_input and if the input is illegal it returns -1.
@@ -128,4 +129,5 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
 
