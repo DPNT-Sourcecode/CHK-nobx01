@@ -5,6 +5,7 @@
 
 FREE_ITEM_KEY = 'free_item'
 
+#TODO: populate directly from .txt file
 PRICES = {
     'A':{'price': 50, 'offers': [{'quantity': 3, 'price': 130}, {'quantity': 5, 'price': 200}]},
     'B':{'price': 30, 'offers': [{'quantity': 2, 'price': 45}]},
@@ -12,6 +13,27 @@ PRICES = {
     'D':{'price': 15, 'offers': None},
     'E':{'price': 40, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'B'}]},
     'F':{'price': 10, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'F'}]},
+
+    'G':{'price': 20, 'offers': None},
+    'H':{'price': 10, 'offers': None},
+    'I':{'price': 35, 'offers': None},
+    'J':{'price': 60, 'offers': None},
+    'K':{'price': 8, 'offers': None},
+    'L':{'price': 15, 'offers': None},
+    'M':{'price': 15, 'offers': None},
+    'N':{'price': 15, 'offers': None},
+    'O':{'price': 15, 'offers': None},
+    'P':{'price': 15, 'offers': None},
+    'Q':{'price': 15, 'offers': None},
+    'R':{'price': 15, 'offers': None},
+    'S':{'price': 15, 'offers': None},
+    'T':{'price': 15, 'offers': None},
+    'U':{'price': 15, 'offers': None},
+    'V':{'price': 15, 'offers': None},
+    'W':{'price': 15, 'offers': None},
+    'X':{'price': 15, 'offers': None},
+    'Y':{'price': 15, 'offers': None},
+    'Z':{'price': 15, 'offers': None},
 }
 
 
@@ -130,3 +152,4 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
