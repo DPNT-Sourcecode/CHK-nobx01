@@ -4,11 +4,11 @@
 # skus = unicode string
 
 PRICES = {
-    'A':{'price': 50, 'offer': [{'quantity': 3, 'price': 130}, {'quantity': 5, 'price': 200}]},
-    'B':{'price': 30, 'offer': [{'quantity': 2, 'price': 45}]},
-    'C':{'price': 20, 'offer': None},
-    'D':{'price': 15, 'offer': None},
-    'E':{'price': 40, 'offer': [{'quantity': 2, 'free_item': 'B'}]},
+    'A':{'price': 50, 'offers': [{'quantity': 3, 'price': 130}, {'quantity': 5, 'price': 200}]},
+    'B':{'price': 30, 'offers': [{'quantity': 2, 'price': 45}]},
+    'C':{'price': 20, 'offers': None},
+    'D':{'price': 15, 'offers': None},
+    'E':{'price': 40, 'offers': [{'quantity': 2, 'free_item': 'B'}]},
 }
 
 
@@ -123,3 +123,4 @@ def checkout(input: str) -> int:
             total_price = unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+

@@ -1,6 +1,6 @@
 from solutions.CHK import checkout_solution
 from solutions.CHK.checkout_solution import apply_free_items
-from solutions.CHK.checkout_solution import clean_and_check_input
+from solutions.CHK.checkout_solution import clean_and_check_input, count_items
 
 class TestCheckout():
 
@@ -15,10 +15,10 @@ class TestCheckout():
 
     def test_apply_free_items(self):
         input = clean_and_check_input('B'*2+'E'*7)
-        print(input)
-        counted_items = checkout_solution.count_items(input)
-        print('1', counted_items)
-        assert apply_free_items(counted_items) == {'B':0, 'E':7}
+        assert apply_free_items(count_items(input)) == {'B':0, 'E':7}
+        input = clean_and_check_input('B'*5 + 'E'*6)
+        assert apply_free_items(count_items(input)) == {'B': 2, 'E': 6}
+        
     # def test_checkout(self):
     #     assert checkout_solution.checkout('') == 0
     #     assert checkout_solution.checkout('ABE') == -1
@@ -27,4 +27,5 @@ class TestCheckout():
     #     assert checkout_solution.checkout('AAAAAAAAAAABBBBBBBCCCCDDDD') == 795
     #     assert checkout_solution.checkout('a') == -1
     #     assert checkout_solution.checkout('ABCa') == -1
+
 
