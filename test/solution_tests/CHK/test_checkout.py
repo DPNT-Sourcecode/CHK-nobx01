@@ -35,19 +35,29 @@ class TestCheckout():
         for item, expected in zip('ABCDEF', [PRICES[item]['price'] for item in PRICES.keys()]):
             assert checkout_solution.checkout(item) == expected
 
-        # assert checkout_solution.checkout('A'*5 + 'B'*5 + 'CD') == 355
-        # assert checkout_solution.checkout('A' + 'B' * 2) == 95
-        # assert checkout_solution.checkout('A'*11 + 'B'*7 + 'C'*4 + 'D'*4) == 755
-        # # no qualified offers
-        # assert checkout_solution.checkout('ABE') == 120
-        # # free offers
-        # assert checkout_solution.checkout('ABEE') == 130
-        # # free and special offers
-        # assert checkout_solution.checkout('B'*2 + 'E'*7) == 280
-        # assert checkout_solution.checkout('A'*2 + 'B'*6 + 'E'*7) == 455
-        # # multiple non-free special offers
-        # assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4) == 885
-        # assert checkout_solution.checkout('A'*14 + 'B'*5 + 'C'*2 + 'D'*2) == 770
+        assert checkout_solution.checkout('A'*5 + 'B'*5 + 'CD') == 355
+        assert checkout_solution.checkout('A' + 'B' * 2) == 95
+        assert checkout_solution.checkout('A'*11 + 'B'*7 + 'C'*4 + 'D'*4) == 755
+
+        # no qualified offers
+        assert checkout_solution.checkout('ABE') == 120
+        # free offers
+        assert checkout_solution.checkout('ABEE') == 130
+        # free and special offers
+        assert checkout_solution.checkout('B'*2 + 'E'*7) == 280
+        assert checkout_solution.checkout('A'*2 + 'B'*6 + 'E'*7) == 455
+        # multiple non-free special offers
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4) == 885
+        assert checkout_solution.checkout('A'*14 + 'B'*5 + 'C'*2 + 'D'*2) == 770
+        # round-3 checks
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*2) == 905
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*5) == 925
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*6) == 925
+        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 7) == 935
+        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 8) == 935
+        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 9) == 935
+        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 10) == 945
+
 
 
 
