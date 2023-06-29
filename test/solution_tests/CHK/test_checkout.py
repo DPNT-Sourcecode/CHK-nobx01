@@ -75,6 +75,3 @@ class TestCheckout():
         assert checkout_solution.checkout('V' * 17) == 5 * 130 + 1 * 90
         assert checkout_solution.checkout('R' * 7 + 'Q'*9) == 7 * 50 + 2*80 + 30
 
-
-
-
