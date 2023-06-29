@@ -11,6 +11,7 @@ PRICES = {
     'C':{'price': 20, 'offers': None},
     'D':{'price': 15, 'offers': None},
     'E':{'price': 40, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'B'}]},
+    'F':{'price': 10, 'offers': [{'quantity': 2, FREE_ITEM_KEY: 'F'}]},
 }
 
 
@@ -80,30 +81,29 @@ def get_offer_with_free_item(offers: list) -> dict:
 
 def apply_free_items(counted_items):
     """
-    Reduce quantities in counted_items for qualified free items, if applicable.
+    Remove from counted_items the qualified free items, where applicable. The case of an item possessing a
+    free offer for itself is treated separately.
     """
     items_with_free_item = get_items_with_free_item()
     for item in items_with_free_item:
         if item in counted_items:
             offers = PRICES[item]['offers']
             offer = get_offer_with_free_item(offers)
-            offer_quantity = counted_items[item] // offer['quantity']
             free_sku = offer[FREE_ITEM_KEY]
+            # item==free_sku is an 'activation switch', if True it represents the case of free self item e.g. case F
+            offer_quantity = counted_items[item] // (offer['quantity'] + (item == free_sku))
             if free_sku in counted_items:
-                number_of_items = counted_items[free_sku]
-                applied_quantity = number_of_items if number_of_items <= offer_quantity else offer_quantity
-                counted_items[free_sku] -= applied_quantity
+                counted_items[free_sku] -= min(counted_items[free_sku], offer_quantity)
     return counted_items
 
 
 def checkout(input: str) -> int:
     """
     This function returns 0 if the input is  clean_and_check_input and if the input is illegal it returns -1.
-    If the input is accepted it calls count_items (which returns a dictionary item, quantity) and then
-    loops through and calculates the
-    total checkout value if there are admissible offers through a superposition of the
-    offer_price * offer_quantity and unit_price * remaining_quantity. If no offers are applicable it computes the
-    price as unit_price * quantity. The sum of all total prices is the total checkout value.
+    If the input is accepted it calls count_items (which returns a dictionary item, quantity).
+    It then eliminates free items from the counting, where applicable. Finally, it loops through and calculates
+    the offer_quantity for each applicable offer and it applies the most valuable offers first (favouring the customer).
+    The remaining quantities are computed on the basis of unit_price. The sum is the total checkout value.
     """
     if len(input) == 0:
         return 0
@@ -130,3 +130,4 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+

@@ -9,7 +9,7 @@ class TestCheckout():
         assert checkout_solution.clean_and_check_input('A--B CC D   B_A') == 'ABCCDBA'
         assert checkout_solution.clean_and_check_input('A--b cC D   B_A') == None
         assert checkout_solution.clean_and_check_input('A_4 D') == None
-        assert checkout_solution.clean_and_check_input('A--B CC D   B_A F') == None
+        assert checkout_solution.clean_and_check_input('A--B CC D   B_A G') == None
 
     def test_count_items(self):
         assert checkout_solution.count_items('ABBCCDDC') == {'A': 1, 'B': 2, 'C': 3, 'D':2}
@@ -19,6 +19,7 @@ class TestCheckout():
         assert apply_free_items(count_items(input)) == {'B':0, 'E':7}
         input = clean_and_check_input('B'*5 + 'E'*6)
         assert apply_free_items(count_items(input)) == {'B': 2, 'E': 6}
+        input = clean_and_check_input('B' * 5 + 'E' * 6 + 'F'*2) == {'B': 2, 'E': 6, 'F': 2}
 
     def test_checkout(self):
         assert checkout_solution.checkout('') == 0
@@ -37,4 +38,5 @@ class TestCheckout():
         # multiple non-free special offers
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4) == 885
         assert checkout_solution.checkout('A'*14 + 'B'*5 + 'C'*2 + 'D'*2) == 770
+
 
