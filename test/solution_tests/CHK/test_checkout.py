@@ -53,10 +53,11 @@ class TestCheckout():
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*2) == 905
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*5) == 925
         assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*6) == 925
-        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 7) == 935
-        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 8) == 935
-        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 9) == 935
-        assert checkout_solution.checkout('A' * 14 + 'B' * 7 + 'C' * 4 + 'D' * 4 + 'F' * 10) == 945
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*7) == 935
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*8) == 945
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*9) == 945
+        assert checkout_solution.checkout('A'*14 + 'B'*7 + 'C'*4 + 'D'*4 + 'F'*10) == 955
+
 
 
 
