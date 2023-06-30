@@ -1,6 +1,6 @@
 from solutions.CHK import checkout_solution
 from solutions.CHK.checkout_solution import apply_free_items, PRICES
-from solutions.CHK.checkout_solution import clean_and_check_input, count_items
+from solutions.CHK.checkout_solution import clean_and_check_input, count_items, calculate_items_eligible_for_group_discount
 
 
 class TestCheckout():
@@ -39,26 +39,23 @@ class TestCheckout():
             {'U': 5},
             {'U': 6},
             {'U': 6},
-
         ]
         for input, expected in zip(inputs, expected_counted_items):
             input1 = clean_and_check_input(input)
             assert apply_free_items(count_items(input1)) == expected
 
+    def test_calculate_items_eligible_for_group_discount(self):
+        inputs = ["SSSTTTUUUVVVWWXXYYYZ", "SSSSTTTUUUVVVWWXXYYYZZ"]
+        expected_totals = [180, 214]
+        expected_counted_items = [{'U': 3, 'V': 3, 'W': 2}, {'U': 3, 'V': 3, 'W': 2}]
+        for input, expected_total, expected_counts in zip(inputs, expected_totals, expected_counted_items):
+            cleaned_input = clean_and_check_input(input)
+            counted_items = count_items(cleaned_input)
+            counted_items = apply_free_items(counted_items)
+            total, counted_items = calculate_items_eligible_for_group_discount(counted_items)
+            assert total==expected_total
+            assert counted_items==expected_counts
 
-
-        # input = clean_and_check_input()
-        # assert apply_free_items(count_items(input)) ==
-        # input = clean_and_check_input('U'*4)
-        # assert apply_free_items(count_items(input)) == {'U': 3}
-        # input = clean_and_check_input('U'*5)
-        # assert apply_free_items(count_items(input)) == {'U': 4}
-        # input = clean_and_check_input('U'*6)
-        # assert apply_free_items(count_items(input)) == {'U': 5}
-        # input = clean_and_check_input('U'*7)
-        # assert apply_free_items(count_items(input)) == {'U': 6}
-        # input = clean_and_check_input('U'*8)
-        # assert apply_free_items(count_items(input)) == {'U': 6}
 
 
     def test_checkout(self):
@@ -98,5 +95,6 @@ class TestCheckout():
         assert checkout_solution.checkout('V' * 16) == 5*130 + 1*50
         assert checkout_solution.checkout('V' * 17) == 5 * 130 + 1 * 90
         assert checkout_solution.checkout('R' * 7 + 'Q'*9) == 7 * 50 + 2*80 + 30
+
 
 
