@@ -21,13 +21,24 @@ class TestCheckout():
             'B' * 5 + 'E' * 6,
             'B' * 5 + 'E' * 6 + 'F' * 2,
             'B' * 5 + 'E' * 6 + 'F' * 3,
-
+            'U' * 3,
+            'U' * 4,
+            'U' * 5,
+            'U' * 6,
+            'U' * 7,
+            'U' * 8,
         ]
         expected_counted_items = [
             {'B':0, 'E':7},
             {'B': 2, 'E': 6},
             {'B': 2, 'E': 6, 'F': 2},
             {'B': 2, 'E': 6, 'F': 2},
+            {'U': 3},
+            {'U': 3},
+            {'U': 4},
+            {'U': 5},
+            {'U': 6},
+            {'U': 6},
 
         ]
         for input, expected in zip(inputs, expected_counted_items):
@@ -36,8 +47,8 @@ class TestCheckout():
 
 
 
-        # input = clean_and_check_input('U'*3)
-        # assert apply_free_items(count_items(input)) == {'U': 3}
+        # input = clean_and_check_input()
+        # assert apply_free_items(count_items(input)) ==
         # input = clean_and_check_input('U'*4)
         # assert apply_free_items(count_items(input)) == {'U': 3}
         # input = clean_and_check_input('U'*5)
@@ -87,4 +98,5 @@ class TestCheckout():
         assert checkout_solution.checkout('V' * 16) == 5*130 + 1*50
         assert checkout_solution.checkout('V' * 17) == 5 * 130 + 1 * 90
         assert checkout_solution.checkout('R' * 7 + 'Q'*9) == 7 * 50 + 2*80 + 30
+
 
