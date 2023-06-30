@@ -217,6 +217,3 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values()) + total_for_group_eligible_items
-
-
-

@@ -16,27 +16,38 @@ class TestCheckout():
         assert checkout_solution.count_items('ABBCCDDC') == {'A': 1, 'B': 2, 'C': 3, 'D':2}
 
     def test_apply_free_items(self):
-        input = clean_and_check_input('B'*2+'E'*7)
-        assert apply_free_items(count_items(input)) == {'B':0, 'E':7}
-        input = clean_and_check_input('B'*5 + 'E'*6)
-        assert apply_free_items(count_items(input)) == {'B': 2, 'E': 6}
-        input = clean_and_check_input('B'*5 + 'E'*6 + 'F'*2)
-        assert  apply_free_items(count_items(input)) == {'B': 2, 'E': 6, 'F': 2}
-        input = clean_and_check_input('B'*5 + 'E'*6 + 'F'*3)
-        assert  apply_free_items(count_items(input)) == {'B': 2, 'E': 6, 'F': 2}
-        # checks for round 4
-        input = clean_and_check_input('U'*3)
-        assert apply_free_items(count_items(input)) == {'U': 3}
-        input = clean_and_check_input('U'*4)
-        assert apply_free_items(count_items(input)) == {'U': 3}
-        input = clean_and_check_input('U'*5)
-        assert apply_free_items(count_items(input)) == {'U': 4}
-        input = clean_and_check_input('U'*6)
-        assert apply_free_items(count_items(input)) == {'U': 5}
-        input = clean_and_check_input('U'*7)
-        assert apply_free_items(count_items(input)) == {'U': 6}
-        input = clean_and_check_input('U'*8)
-        assert apply_free_items(count_items(input)) == {'U': 6}
+        inputs = [
+            'B'*2+'E'*7,
+            'B' * 5 + 'E' * 6,
+            'B' * 5 + 'E' * 6 + 'F' * 2,
+            'B' * 5 + 'E' * 6 + 'F' * 3,
+
+        ]
+        expected_counted_items = [
+            {'B':0, 'E':7},
+            {'B': 2, 'E': 6},
+            {'B': 2, 'E': 6, 'F': 2},
+            {'B': 2, 'E': 6, 'F': 2},
+
+        ]
+        for input, expected in zip(inputs, expected_counted_items):
+            input1 = clean_and_check_input(input)
+            assert apply_free_items(count_items(input1)) == expected
+
+
+
+        # input = clean_and_check_input('U'*3)
+        # assert apply_free_items(count_items(input)) == {'U': 3}
+        # input = clean_and_check_input('U'*4)
+        # assert apply_free_items(count_items(input)) == {'U': 3}
+        # input = clean_and_check_input('U'*5)
+        # assert apply_free_items(count_items(input)) == {'U': 4}
+        # input = clean_and_check_input('U'*6)
+        # assert apply_free_items(count_items(input)) == {'U': 5}
+        # input = clean_and_check_input('U'*7)
+        # assert apply_free_items(count_items(input)) == {'U': 6}
+        # input = clean_and_check_input('U'*8)
+        # assert apply_free_items(count_items(input)) == {'U': 6}
 
 
     def test_checkout(self):
@@ -76,5 +87,4 @@ class TestCheckout():
         assert checkout_solution.checkout('V' * 16) == 5*130 + 1*50
         assert checkout_solution.checkout('V' * 17) == 5 * 130 + 1 * 90
         assert checkout_solution.checkout('R' * 7 + 'Q'*9) == 7 * 50 + 2*80 + 30
-
 
