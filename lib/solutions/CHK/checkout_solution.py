@@ -17,7 +17,7 @@ PRICES = {
     'H':{'price': 10, 'offers': [{'quantity': 5, 'price': 45}, {'quantity': 10, 'price': 80}]},
     'I':{'price': 35, 'offers': None},
     'J':{'price': 60, 'offers': None},
-    'K':{'price': 80, 'offers': [{'quantity': 2, 'price': 150}]},
+    'K':{'price': 70, 'offers': [{'quantity': 2, 'price': 150}]},
     'L':{'price': 90, 'offers': None},
     'M':{'price': 15, 'offers': None},
     'N':{'price': 40, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'M'}]},
@@ -25,14 +25,14 @@ PRICES = {
     'P':{'price': 50, 'offers': [{'quantity': 5, 'price': 200}]},
     'Q':{'price': 30, 'offers': [{'quantity': 3, 'price': 80}]},
     'R':{'price': 50, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'Q'}]},
-    'S':{'price': 30, 'offers': None},
+    'S':{'price': 20, 'offers': None},
     'T':{'price': 20, 'offers': None},
     'U':{'price': 40, 'offers': [{'quantity': 3, FREE_ITEM_KEY: 'U'}]},
     'V':{'price': 50, 'offers': [{'quantity': 2, 'price': 90}, {'quantity': 3, 'price': 130}]},
     'W':{'price': 20, 'offers': None},
-    'X':{'price': 90, 'offers': None},
-    'Y':{'price': 10, 'offers': None},
-    'Z':{'price': 50, 'offers': None},
+    'X':{'price': 17, 'offers': None},
+    'Y':{'price': 20, 'offers': None},
+    'Z':{'price': 21, 'offers': None},
 }
 
 
@@ -148,3 +148,4 @@ def checkout(input: str) -> int:
         total_price += unit_price * quantity
         total_prices[sku] = total_price
     return sum(total_prices.values())
+
