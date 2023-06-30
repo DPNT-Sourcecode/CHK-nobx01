@@ -6,9 +6,11 @@ from solutions.CHK.checkout_solution import clean_and_check_input, count_items
 class TestCheckout():
 
     def test_clean_and_check_input(self):
-        assert checkout_solution.clean_and_check_input('A--B CC D   B_A') == 'ABCCDBA'
-        assert checkout_solution.clean_and_check_input('A--b cC D   B_A') == None
-        assert checkout_solution.clean_and_check_input('A_4 D') == None
+        inputs = ['A--B CC D   B_A', 'A--b cC D   B_A', 'A_4 D']
+        expected_outputs = ['ABCCDBA', None, None]
+        for input, expected in zip(inputs, expected_outputs):
+            assert clean_and_check_input(input) == expected
+
 
     def test_count_items(self):
         assert checkout_solution.count_items('ABBCCDDC') == {'A': 1, 'B': 2, 'C': 3, 'D':2}
@@ -74,4 +76,5 @@ class TestCheckout():
         assert checkout_solution.checkout('V' * 16) == 5*130 + 1*50
         assert checkout_solution.checkout('V' * 17) == 5 * 130 + 1 * 90
         assert checkout_solution.checkout('R' * 7 + 'Q'*9) == 7 * 50 + 2*80 + 30
+
 

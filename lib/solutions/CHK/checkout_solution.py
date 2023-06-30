@@ -115,6 +115,74 @@ def apply_free_items(counted_items):
     return counted_items
 
 
+def get_discount_groups():
+    """
+    Extract different groups for group discount offer. These are returned as a set of tuples.
+    The SKU's in each tuple are sorted with respect to unit pricing favouring the customer i.e. higher unit prices
+    are ordered first.
+    """
+    group_discounts = set()
+    for data in PRICES.values():
+        offers = data.get('offers')
+        if offers and isinstance(offers, list):
+            for offer in offers:
+                group = offer.get('group')
+                if isinstance(group, list):
+                    sorted_group = tuple(sorted(group, key=lambda x: PRICES[x]['price'], reverse=True))
+                    group_discounts.add(sorted_group)
+    return group_discounts
+
+
+def get_offer_with_group_discount(offers: list) -> dict:
+    """
+    Given a list of offers, return the one with the key 'group'
+    """
+    return next((d for d in offers if 'group' in d), None)
+
+
+def get_grouped_items(counted_items, group) -> list:
+    """
+    Arrange the counted_items belonging to a group in a list of tuples, sorted in priority
+    order (favouring the customer). The last tuple may be of different length if the items can't be fit exactly.
+    """
+    full_string = ''.join(item*counted_items[item] for item in group if item in counted_items)
+    offer = get_offer_with_group_discount(PRICES[group[0]]['offers'])
+    group_quantity = offer['quantity']
+    return [tuple(full_string[i:i+group_quantity]) for i in range(0, len(full_string), group_quantity)]
+
+
+def remove_group_items_from_counted_items(counted_items, group) -> dict:
+    """
+    Remove the items specified in a group from the counted_items.
+    """
+    for item in group:
+        if item in counted_items:
+            del counted_items[item]
+    return counted_items
+
+
+def calculate_items_eligible_for_group_discount(counted_items):
+    """
+    Fetch a list of tuples sorted in priority order favouring the customer and calculate their total on the
+    basis of their group price, if possible, otherwise use unit price.
+    Finally, remove these items from counted_items as they have already been considered.
+    """
+    groups = get_discount_groups()
+    total = 0
+    for group in groups:
+        grouped_items = get_grouped_items(counted_items, group)
+        offer = get_offer_with_group_discount(PRICES[group[0]]['offers'])
+        group_quantity = offer['quantity']
+        group_price = offer['price']
+        group_count = sum(1 for item_tuple in grouped_items if len(item_tuple) == group_quantity)
+        total += group_count * group_price
+        non_group_count = sum(1 for item_tuple in grouped_items if len(item_tuple) != group_quantity)
+        if non_group_count:
+            for item in grouped_items[-1]:
+                total += PRICES[item]['price']
+        counted_items = remove_group_items_from_counted_items(counted_items, group)
+    return total, counted_items
+
 def checkout(input: str) -> int:
     """
     This function returns 0 if the input is  clean_and_check_input and if the input is illegal it returns -1.
@@ -133,6 +201,7 @@ def checkout(input: str) -> int:
 
     counted_items = count_items(cleaned_input)
     counted_items = apply_free_items(counted_items)
+    total_for_group_eligible_items, counted_items = calculate_items_eligible_for_group_discount(counted_items)
 
     total_prices = {}
     for sku, quantity in counted_items.items():
@@ -147,6 +216,7 @@ def checkout(input: str) -> int:
                     total_price += offer['price'] * offer_quantity
         total_price += unit_price * quantity
         total_prices[sku] = total_price
-    return sum(total_prices.values())
+    return sum(total_prices.values()) + total_for_group_eligible_items
+
 
 
