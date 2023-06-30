@@ -5,6 +5,7 @@ from solutions.CHK.checkout_solution import clean_and_check_input, count_items, 
 
 
 class TestCheckout():
+    #TODO: in a real world we would use parametrized tests here.
 
     def test_clean_and_check_input(self):
         inputs = ['A--B CC D   B_A', 'A--b cC D   B_A', 'A_4 D']
@@ -86,6 +87,8 @@ class TestCheckout():
             'V' * 16,
             'V' * 17,
             'R' * 7 + 'Q' * 9,
+            'X' + 'Y',
+            'XXXZZTT',
         ]
         expected_outputs = [
             0,
@@ -110,9 +113,12 @@ class TestCheckout():
             5 * 130 + 1 * 50,
             5 * 130 + 1 * 90,
             7 * 50 + 2 * 80 + 30,
+            17 + 20,
+            2*45 + 17,
         ]
         for input, expected in zip(inputs, expected_outputs):
             assert checkout(input) == expected
+
 
 
 
